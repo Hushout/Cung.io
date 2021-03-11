@@ -1,6 +1,7 @@
 const width = 300;//hauteur de la box
 const heigt = 300;//largeur de la box
 const grid = document.querySelector('.grid')
+const scoreDisplay = document.querySelector('.score')
 
 //coupe la box en carré de 20x20
 for (let i=0;i < 225 ;i++){
@@ -72,6 +73,7 @@ let currentKeyCursor = 0
 // console.log("le curseur est sur la key n°" +currentKeyCursor)
 
 function verifyKey(direction){
+    if(currentKeyCursor < currentKeyDirection.length){
     if (currentKeyDirection[currentKeyCursor] == direction ) {
         currentKeyvalue[currentKeyCursor]=true
         squares[allKeys[currentKeyCursor]].classList.replace('newkey' ,'truekey')
@@ -87,6 +89,7 @@ function verifyKey(direction){
     }
     // console.log(currentKeyCursor)
     console.log(possibleKey[direction])
+    }
 }
 
 
@@ -95,7 +98,7 @@ function verifyKey(direction){
 function initAll(){
     currentKeyDirection = [] 
     currentKeyvalue =[]
-    currentKeyCursor--
+    currentKeyCursor--//problème ici
     if(currentKeyCursor > 0){
         while(currentKeyCursor >= 0){
             let element = document.getElementById(currentKeyCursor);
@@ -109,9 +112,11 @@ function initAll(){
     }
     
 }
-
+var score = 0;
 function verifyValKey(){
     if(currentKeyvalue.every(v => v === true)){
+        score+=1;
+        scoreDisplay.innerHTML = 'score :' +score
         initAll()
         draw()
     }
@@ -144,13 +149,16 @@ function playKey(e) {
         case 39 ://rightkey
             verifyKey(3)
             break
+        case 89 ://key-y
+            chrono(15)
+            break
         case 32 ://spacebar
             // console.log(currentKeyvalue.every(v => v === true))
             verifyValKey()
             break    
     }
   }
-document.addEventListener('keydown', playKey)
+  document.addEventListener('keydown', playKey)
 
 
 function draw() {
@@ -158,8 +166,22 @@ function draw() {
     //     squares[allKeys[i]].classList.add('newkey')
     // }
     // initAll()
-    let rdNb=Math.floor(Math.random() * 12)
-    generateAllKey(2)
+    let rdNb=Math.floor(1 + (Math.random() * (11 - 1)))
+    generateAllKey(rdNb)
 }
 
 draw()
+
+const timerDisplay = document.querySelector('.timer')
+
+function chrono(t){
+    if(t == 0){
+        timerDisplay.innerHTML = 'stop ! c\'est finis !'
+        document.removeEventListener('keydown', playKey)
+    }
+    else {
+        timerDisplay.innerHTML = 'il reste '+t+' secondes'
+        t--
+        setTimeout(chrono, 1000,t); // check again in a second
+    }
+}
