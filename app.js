@@ -1,10 +1,10 @@
-const width = 300;//hauteur de la box
-const heigt = 300;//largeur de la box
+const width = 1200;//hauteur de la box
+const heigt = 100;//largeur de la box
 const grid = document.querySelector('.grid')
 const scoreDisplay = document.querySelector('.score')
 
 //coupe la box en carré de 20x20
-for (let i=0;i < 225 ;i++){
+for (let i=0;i < 12 ;i++){
     const square = document.createElement('div')
     square.setAttribute("id", i);
     grid.appendChild(square)
@@ -112,6 +112,7 @@ function initAll(){
     }
     
 }
+
 var score = 0;
 function verifyValKey(){
     if(currentKeyvalue.every(v => v === true)){
@@ -134,6 +135,7 @@ function verifyValKey(){
     }
 }
 
+
 //function qui reconnait la touche et change la couleur du bouton
 function playKey(e) { 
     switch(e.keyCode) {
@@ -150,7 +152,10 @@ function playKey(e) {
             verifyKey(3)
             break
         case 89 ://key-y
-            chrono(15)
+            draw()
+            start(3)
+            setTimeout(chrono, 3000,15);
+            // chrono(15)
             break
         case 32 ://spacebar
             // console.log(currentKeyvalue.every(v => v === true))
@@ -158,7 +163,7 @@ function playKey(e) {
             break    
     }
   }
-  document.addEventListener('keydown', playKey)
+  
 
 
 function draw() {
@@ -167,21 +172,42 @@ function draw() {
     // }
     // initAll()
     let rdNb=Math.floor(1 + (Math.random() * (11 - 1)))
-    generateAllKey(rdNb)
+    generateAllKey(11)
 }
 
-draw()
+const consoleGame = document.querySelector('.consoleGame')
+
+function start(t) {
+    if (t==0) {
+        consoleGame.innerHTML += '<br> START !!!!'
+    }
+    else{
+        consoleGame.innerHTML += '<br>'+t
+    t--
+    setTimeout(start, 1000,t); // check again in a second
+    }
+}
 
 const timerDisplay = document.querySelector('.timer')
-
 function chrono(t){
-    if(t == 0){
-        timerDisplay.innerHTML = 'stop ! c\'est finis !'
+    if(t == -1){
+        consoleGame.innerHTML = '<br>STOP ! c\'est finis !'
         document.removeEventListener('keydown', playKey)
     }
     else {
-        timerDisplay.innerHTML = 'il reste '+t+' secondes'
+        timerDisplay.innerHTML = t+' secondes'
         t--
         setTimeout(chrono, 1000,t); // check again in a second
     }
 }
+
+// function highscoreM1() {
+//     document.addEventListener('keydown', playKey)
+//     draw()
+// }
+
+function main(){
+    document.addEventListener('keydown', playKey)
+}
+
+main()
