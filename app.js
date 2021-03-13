@@ -152,9 +152,9 @@ function playKey(e) {
             verifyKey(3)
             break
         case 89 ://key-y
-            draw()
             start(3)
             setTimeout(chrono, 3000,15);
+            setTimeout(draw, 3000);
             // chrono(15)
             break
         case 32 ://spacebar
@@ -172,7 +172,7 @@ function draw() {
     // }
     // initAll()
     let rdNb=Math.floor(1 + (Math.random() * (11 - 1)))
-    generateAllKey(11)
+    generateAllKey(rdNb)
 }
 
 const consoleGame = document.querySelector('.consoleGame')
