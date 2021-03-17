@@ -117,7 +117,7 @@ var score = 0;
 function verifyValKey(){
     if(currentKeyvalue.every(v => v === true)){
         score+=1;
-        scoreDisplay.innerHTML = 'score :' +score
+        scoreDisplay.innerHTML = score
         initAll()
         draw()
     }
@@ -153,7 +153,7 @@ function playKey(e) {
             break
         case 89 ://key-y
             start(3)
-            setTimeout(chrono, 3000,15);
+            setTimeout(chrono, 3000,45);
             setTimeout(draw, 3000);
             // chrono(15)
             break
@@ -171,7 +171,7 @@ function draw() {
     //     squares[allKeys[i]].classList.add('newkey')
     // }
     // initAll()
-    let rdNb=Math.floor(1 + (Math.random() * (11 - 1)))
+    let rdNb=Math.floor(1 + (Math.random() * (12 - 1)))
     generateAllKey(rdNb)
 }
 
